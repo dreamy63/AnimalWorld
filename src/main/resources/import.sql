@@ -1,0 +1,2 @@
+insert into productos (id_producto,nombre,descripcion,precio_unitario,stock,recomendaciones) values (1,'juguete hueso','Juguete para perros en forma de hueso',7,30,'Perros mayores de 1 mes');
+insert into productos (id_producto,nombre,descripcion,precio_unitario,stock,recomendaciones) values (2,'juguete pluma','Juguete para gatos en forma de pluma',5,18,'Gatos mayores de 1 mes');
