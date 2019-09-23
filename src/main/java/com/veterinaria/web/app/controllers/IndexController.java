@@ -23,8 +23,8 @@ public class IndexController {
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+	@RequestMapping(value = { "/index","/" }, method = RequestMethod.GET)
+	public String index(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication, HttpServletRequest request) {
 
 		// Spring Security
@@ -66,7 +66,7 @@ public class IndexController {
 		Pageable pageRequest = PageRequest.of(page, 4);
 
 		model.addAttribute("titulo", "Inicio");
-		return "redirect:index";
+		return "index";
 	}
 	
 	private boolean hasRole(String role) {

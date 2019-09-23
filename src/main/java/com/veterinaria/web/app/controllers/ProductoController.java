@@ -35,7 +35,7 @@ public class ProductoController {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@RequestMapping(value = { "/listaProductos", "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/listaProductos" }, method = RequestMethod.GET)
 	public String listarProductos(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication, HttpServletRequest request) {
 
