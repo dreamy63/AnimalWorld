@@ -9,8 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "usuarios")
@@ -19,23 +22,55 @@ public class Usuario implements Serializable {
 	private static final long serialVersionUID = 8403187889165947106L;
 
 	@Id
+	@Column(name = "id_usuario")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idUsuario;
 
-	private String nombres;
-	private String apellidos;
+	@NotEmpty
+	@Column(name = "usu_nombre")
+	private String nombre;
+	
+	@NotEmpty
+	@Column(name = "usu_apellido")
+	private String apellido;
+	
+	@NotEmpty
+	@Column(name = "usu_dni")
 	private String dni;
-
-	@Column(name = "fecha_nacimiento")
-	@Temporal(TemporalType.DATE)
+	
+	@NotNull
+	@Column(name = "usu_fecha_nac")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaNacimiento;
-
+	
+	@NotEmpty
+	@Column(name = "usu_telefono")
 	private String telefono;
+	
+	@NotEmpty
+	@Column(name = "usu_celular")
 	private String celular;
-	private String email;
-	private String usuario;
-	private String clase;
+	
+	@NotEmpty
+	@Email
+	@Column(name = "usu_email")
+	private String email;	
 
+	@NotEmpty
+	@Column(name = "usu_usuario")
+	private String usuario;
+	
+	@NotEmpty
+	@Column(name = "usu_clave")
+	private String clave;
+	
+	@Column(name = "usu_rol")
+	private String rol;
+	
+	@Column(name = "usu_foto")
+	private String foto;	
+	
+	
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
@@ -44,20 +79,20 @@ public class Usuario implements Serializable {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getNombres() {
-		return nombres;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNombres(String nombres) {
-		this.nombres = nombres;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getApellidos() {
-		return apellidos;
+	public String getApellido() {
+		return apellido;
 	}
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 	public String getDni() {
@@ -108,12 +143,32 @@ public class Usuario implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public String getClase() {
-		return clase;
+	public String getClave() {
+		return clave;
 	}
 
-	public void setClase(String clase) {
-		this.clase = clase;
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	@Override
+	public String toString() {
+		return nombre + " " + apellido;
+	}
 }

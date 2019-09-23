@@ -4,28 +4,45 @@
 <meta charset="UTF-8" />
 </head>
 <body class="login-img3-body">
-
-	<div class="alert alert-success fade in" th:if="${success != null}"
-		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;">
-		<button data-dismiss="alert" class="close close-sm" type="button"
-			th:if="${success != null}" style="color: green;" th:text="${success}"></button>
+	<div class="sufee-alert alert with-close alert-success alert-dismissible fade show"
+		th:if="${success != null}"
+ 		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;
+ 		padding-bottom: 1px;">
+ 		<a th:text="${success}"></a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+        	th:if="${success != null}" style="padding-top: 5px;">
+        <span aria-hidden="true">x</span>
+        </button>
+    </div>
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show"
+ 		th:if="${error != null}"
+ 		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;
+ 		padding-bottom: 1px;">
+ 		<a th:text="${error}"></a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+        	th:if="${error != null}" style="padding-top: 5px;">
+        <span aria-hidden="true">x</span>
+        </button>
 	</div>
-	<div class="alert alert-block alert-danger fade in"
-		th:if="${error != null}"
-		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;">
-		<button data-dismiss="alert" class="close close-sm" type="button"
-			th:if="${error != null}" style="color: red;" th:text="${error}"></button>
+	<div class="sufee-alert alert with-close alert-warning alert-dismissible fade show"
+ 		th:if="${warning != null}"
+ 		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;
+ 		padding-bottom: 1px;">
+ 		<a th:text="${warning}"></a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+        	th:if="${warning != null}" style="padding-top: 5px;">
+        <span aria-hidden="true">x</span>
+        </button>
 	</div>
-	<div class="alert alert-warning fade in" th:if="${warning != null}"
-		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;">
-		<button data-dismiss="alert" class="close close-sm" type="button"
-			th:if="${warning != null}" style="color: orange;"
-			th:text="${warning}"></button>
-	</div>
-	<div class="alert alert-warning fade in" th:if="${info != null}"
-		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;">
-		<button data-dismiss="alert" class="close close-sm" type="button"
-			th:if="${info != null}" style="color: orange;" th:text="${info}"></button>
+	<div class="sufee-alert alert with-close alert-warning alert-dismissible fade show"
+ 		th:if="${info != null}"
+ 		style="display: inline-block; position: absolute; right: 0px; margin-top: 10px;
+ 		padding-bottom: 1px;">
+ 		<a th:text="${info}"></a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"
+        	th:if="${info != null}" style="padding-top: 5px;">
+        <span aria-hidden="true">x</span>
+        </button>
 	</div>
 	<div class="container"
 		style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
