@@ -1,6 +1,8 @@
 package com.veterinaria.web.app.model.entity;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,9 +38,8 @@ public class Usuario implements Serializable {
 	
 	@NotEmpty
 	@Column(name = "usu_dni")
-	private String dni;
+	private String dni;	
 	
-	@NotNull
 	@Column(name = "usu_fecha_nac")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaNacimiento;
@@ -68,7 +69,11 @@ public class Usuario implements Serializable {
 	private String rol;
 	
 	@Column(name = "usu_foto")
-	private String foto;	
+	private String foto;
+	
+	private String dia;
+	private String mes;
+	private String anio;
 	
 	
 	public Long getIdUsuario() {
@@ -107,8 +112,8 @@ public class Usuario implements Serializable {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaNacimiento(Date fechaNacimiento) throws ParseException {
+		this.fechaNacimiento = toDate();
 	}
 
 	public String getTelefono() {
@@ -165,10 +170,41 @@ public class Usuario implements Serializable {
 
 	public void setFoto(String foto) {
 		this.foto = foto;
+	}	
+
+	public String getDia() {
+		return dia;
+	}
+
+	public void setDia(String dia) {
+		this.dia = dia;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAño(String anio) {
+		this.anio = anio;
 	}
 
 	@Override
 	public String toString() {
 		return nombre + " " + apellido;
+	}
+	
+	public Date toDate() throws ParseException {
+		String dateAux = anio.concat("-").concat(mes).concat("-").concat(dia);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date convertedCurrentDate = sdf.parse(dateAux);
+		return convertedCurrentDate;
 	}
 }

@@ -1,4 +1,4 @@
-package com.veterinaria.web.aoo.model.service;
+package com.veterinaria.web.app.model.service;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface IUsuarioService {
 	
 	public Page<Usuario> findAll(Pageable pageable);
 
-	public void save(Usuario Usuario);
+	public void save(Usuario usuario);
 	
 	public Usuario findOne(Long id);
 	

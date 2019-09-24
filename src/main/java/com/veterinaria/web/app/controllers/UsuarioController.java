@@ -33,8 +33,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.veterinaria.web.aoo.model.service.IUsuarioService;
 import com.veterinaria.web.app.model.entity.Usuario;
+import com.veterinaria.web.app.model.service.IUsuarioService;
 import com.veterinaria.web.app.util.paginator.PageRender;
 
 @Controller
@@ -46,22 +46,22 @@ public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;	
 
-		@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('ROLE_USER')")
 	@GetMapping(value = "/ver/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-		Usuario Usuario = usuarioService.fetchByIdWithFacturas(id);
-		if (Usuario == null) {
+		Usuario usuario = usuarioService.fetchByIdWithFacturas(id);
+		if (usuario == null) {
 			flash.addFlashAttribute("error", "El Usuario no existe en la base de datos");
 			return "redirect:/listar";
 		}
 
-		model.put("Usuario", Usuario);
-		model.put("titulo", "Detalle Usuario: " + Usuario.getNombre());
+		model.put("Usuario", usuario);
+		model.put("titulo", "Detalle Usuario: " + usuario.getNombre());
 		return "ver";
 	}
 
-	@RequestMapping(value = {"/listar", "/"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/listar"}, method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication,
 			HttpServletRequest request) {
@@ -98,34 +98,34 @@ public class UsuarioController {
 		
 		Pageable pageRequest = PageRequest.of(page, 4);
 
-		Page<Usuario> clientes = usuarioService.findAll(pageRequest);
+		Page<Usuario> usuarios = usuarioService.findAll(pageRequest);
 
-		PageRender<Usuario> pageRender = new PageRender<Usuario>("/listar", clientes);
-		model.addAttribute("titulo", "Listado de clientes");
-		model.addAttribute("clientes", clientes);
+		PageRender<Usuario> pageRender = new PageRender<Usuario>("/listar", usuarios);
+		model.addAttribute("titulo", "Listado de usuarios");
+		model.addAttribute("clientes", usuarios);
 		model.addAttribute("page", pageRender);
-		return "listar";
+		return "index";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/form")
+	@RequestMapping(value = "/registrarUsuario")
 	public String crear(Map<String, Object> model) {
 
-		Usuario Usuario = new Usuario();
-		model.put("Usuario", Usuario);
-		model.put("titulo", "Crear Usuario");
-		return "form";
+		Usuario usuario = new Usuario();
+		model.put("usuario", usuario);
+		model.put("titulo", "Registrar Usuario");
+		return "registrarUsuario";
 	}
 
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/form/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-		Usuario Usuario = null;
+		Usuario usuario = null;
 
 		if (id > 0) {
-			Usuario = usuarioService.findOne(id);
-			if (Usuario == null) {
+			usuario = usuarioService.findOne(id);
+			if (usuario == null) {
 				flash.addFlashAttribute("error", "El ID del Usuario no existe en la BBDD!");
 				return "redirect:/listar";
 			}
@@ -133,27 +133,27 @@ public class UsuarioController {
 			flash.addFlashAttribute("error", "El ID del Usuario no puede ser cero!");
 			return "redirect:/listar";
 		}
-		model.put("Usuario", Usuario);
+		model.put("Usuario", usuario);
 		model.put("titulo", "Editar Usuario");
 		return "form";
 	}
 
 	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Usuario Usuario, BindingResult result, Model model,
-			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+	@RequestMapping(value = "/registrarUsuario", method = RequestMethod.POST)
+	public String guardar(Usuario usuario, BindingResult result, Model model,
+			RedirectAttributes flash, SessionStatus status) {
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Usuario");
-			return "form";
+			return "registrarUsuario";
 		}
 
-		String mensajeFlash = (Usuario.getIdUsuario() != null) ? "Usuario editado con éxito!" : "Usuario creado con éxito!";
+		String mensajeFlash = (usuario.getIdUsuario() != null) ? "Usuario editado con éxito!" : "Usuario creado con éxito!";
 
-		usuarioService.save(Usuario);
+		usuarioService.save(usuario);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:listar";
+		return "redirect:/";
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -161,7 +161,7 @@ public class UsuarioController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			Usuario Usuario = usuarioService.findOne(id);
+			Usuario usuario = usuarioService.findOne(id);
 
 			usuarioService.delete(id);
 			flash.addFlashAttribute("success", "Usuario eliminado con éxito!");			

@@ -1,4 +1,4 @@
-package com.veterinaria.web.aoo.model.service;
+package com.veterinaria.web.app.model.service;
 
 import java.util.List;
 
@@ -27,8 +27,8 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
 	@Override
 	@Transactional
-	public void save(Usuario Usuario) {
-		usuarioDao.save(Usuario);
+	public void save(Usuario usuario) {
+		usuarioDao.save(usuario);
 	}
 
 	@Override
