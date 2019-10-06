@@ -113,10 +113,45 @@ public class UsuarioController {
 
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
-		model.put("titulo", "Registrar Usuario");
+		model.put("titulo", "Registrar usuario");
+		model.put("boton", "Registrar");
 		return "registrarUsuario";
-	}
+	}	
 
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(value = "/registrarUsuario", method = RequestMethod.POST)
+	public String guardar(Usuario usuario, BindingResult result, Model model,
+			RedirectAttributes flash, SessionStatus status) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario de Usuario");
+			return "registrarUsuario";
+		}
+
+		String mensajeFlash = (usuario.getIdUsuario() != null) ? "Usuario editado con éxito!" : "Usuario creado con éxito!";
+
+		usuarioService.save(usuario);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:/usuarios";
+	}
+	
+	@RequestMapping(value = {"/usuarios"}, method = RequestMethod.GET)
+	public String listarUsuarios(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
+			Authentication authentication,
+			HttpServletRequest request) {
+
+		Pageable pageRequest = PageRequest.of(page, 4);
+
+		Page<Usuario> usuarios = usuarioService.findAll(pageRequest);
+
+		PageRender<Usuario> pageRender = new PageRender<Usuario>("/usuarios", usuarios);
+		model.addAttribute("titulo", "Listado de usuarios");
+		model.addAttribute("usuarios", usuarios);
+		model.addAttribute("page", pageRender);
+		return "usuarios";
+	}
+	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/form/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
@@ -136,24 +171,6 @@ public class UsuarioController {
 		model.put("Usuario", usuario);
 		model.put("titulo", "Editar Usuario");
 		return "form";
-	}
-
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/registrarUsuario", method = RequestMethod.POST)
-	public String guardar(Usuario usuario, BindingResult result, Model model,
-			RedirectAttributes flash, SessionStatus status) {
-
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Usuario");
-			return "registrarUsuario";
-		}
-
-		String mensajeFlash = (usuario.getIdUsuario() != null) ? "Usuario editado con éxito!" : "Usuario creado con éxito!";
-
-		usuarioService.save(usuario);
-		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:/";
 	}
 
 	@Secured("ROLE_ADMIN")

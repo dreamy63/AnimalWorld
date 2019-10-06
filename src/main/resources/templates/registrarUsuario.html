@@ -16,15 +16,17 @@
         <header th:replace="layout/layoutP :: header"></header>
         <!-- Content -->
         <div class="content">
-            <div class="animated fadeIn">  
-                <div class="clearfix"></div>
+            <div class="animated fadeIn">
                 <div class="orders">
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <h4 class="box-title" th:text="${titulo}"></h4>
-                                </div>
+                            	<div class="card-header">
+                                	<strong class="card-title" th:text="${titulo}"></strong>
+                            	</div>
+<!--                                 <div class="card-body"> -->
+<!--                                     <h4 class="box-title" th:text="${titulo}"></h4> -->
+<!--                                 </div> -->
                                 <div class="card-body--">
                                 	<div class="card-body card-block">
 <!--                                 		<div th:object="${usuario}" th:remove="tag"> -->
@@ -153,7 +155,7 @@
                                             </div>
                                             <div class="row">
                                             	<div class="col-12">
-                                            		<input type="submit" class="btn btn-primary pull-right">Registrar</button>
+                                            		<input type="submit" class="btn btn-primary pull-right" th:value="${boton}"/>
                                             	</div>
                                             </div>
                                     	</form>
@@ -165,6 +167,7 @@
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 
     <!-- Scripts -->
