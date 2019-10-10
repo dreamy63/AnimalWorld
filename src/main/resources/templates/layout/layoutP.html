@@ -81,33 +81,36 @@
 							<i class="menu-icon fa fa-users"></i>Usuarios
 						</a>
 						<ul class="sub-menu children dropdown-menu">
-							<li><i class="fa fa-user"></i><a th:href="@{/registrarUsuario}">Registrar usuario</a></li>
-							<li><i class="fa fa-eye"></i><a th:href="@{/usuarios}">Buscar usuarios</a></li>
+							<li><i class="fa fa-plus-square"></i><a th:href="@{/registrarUsuario}">Registrar nuevo usuario</a></li>
+							<li><i class="fa fa-pencil-square"></i><a th:href="@{/usuarios}">Gestionar usuarios existentes</a></li>
 							<li><i class="fa fa-rocket"></i><a href="ui-badges.html">Asignar roles</a></li>
 						</ul>
 					</li>
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" 
-							aria-haspopup="true" aria-expanded="false">
-							<i class="menu-icon fa fa-cogs"></i>Components
+					<li class="menu-item-has-children dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+						<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="menu-icon fa fa-key"></i>Seguridad
 						</a>
 						<ul class="sub-menu children dropdown-menu">
-							<li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Buttons</a></li>
-							<li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Badges</a></li>
-							<li><i class="fa fa-bars"></i><a href="ui-tabs.html">Tabs</a></li>
-							<li><i class="fa fa-id-card-o"></i><a href="ui-cards.html">Cards</a></li>
-							<li><i class="fa fa-exclamation-triangle"></i><a href="ui-alerts.html">Alerts</a></li>
-							<li><i class="fa fa-spinner"></i><a href="ui-progressbar.html">Progress Bars</a></li>
-							<li><i class="fa fa-fire"></i><a href="ui-modals.html">Modals</a></li>
-							<li><i class="fa fa-book"></i><a href="ui-switches.html">Switches</a></li>
-							<li><i class="fa fa-th"></i><a href="ui-grids.html">Grids</a></li>
-							<li><i class="fa fa-file-word-o"></i><a href="ui-typgraphy.html">Typography</a></li>
+							<li><i class="fa fa-rocket"></i><a href="tables-basic.html">Asignar roles</a></li>
 						</ul>
 					</li>
+					<li class="menu-item-has-children dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+						<a href="#" class="dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="menu-icon fa fa-cog"></i>Mantenimiento
+						</a>
+						<ul class="sub-menu children dropdown-menu">
+							<li><i class="fa fa-user"></i><a href="tables-basic.html">Usuarios</a></li>
+							<li><i class="fa fa-credit-card"></i><a href="tables-basic.html">Clientes</a></li>
+							<li><i class="fa fa-truck"></i><a th:href="@{/productos}">Productos</a></li>
+							<li><i class="fa fa-briefcase"></i><a href="tables-basic.html">Servicios</a></li>
+						</ul>
+					</li>					
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="menu-icon fa fa-table"></i>Tables
+							<i class="menu-icon fa fa-table"></i>Clientes
 						</a>
 						<ul class="sub-menu children dropdown-menu">
 							<li><i class="fa fa-table"></i><a href="tables-basic.html">Basic Table</a></li>
@@ -117,29 +120,27 @@
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> <i
-							class="menu-icon fa fa-th"></i>Forms
+							class="menu-icon fa fa-th"></i>Mascota
 						</a>
 						<ul class="sub-menu children dropdown-menu">
 							<li><i class="menu-icon fa fa-th"></i><a href="forms-basic.html">Basic Form</a></li>
 							<li><i class="menu-icon fa fa-th"></i><a href="forms-advanced.html">Advanced Form</a></li>
 						</ul>
 					</li>
-					<li class="menu-title">Icons</li>
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> <i
-							class="menu-icon fa fa-tasks"></i>Icons
+							class="menu-icon fa fa-tasks"></i>Historias Clínicas
 						</a>
 						<ul class="sub-menu children dropdown-menu">
 							<li><i class="menu-icon fa fa-fort-awesome"></i><a href="font-fontawesome.html">Font Awesome</a></li>
 							<li><i class="menu-icon ti-themify-logo"></i><a href="font-themify.html">Themefy Icons</a></li>
 						</ul>
-					</li>
-					<li><a href="widgets.html"> <i class="menu-icon ti-email"></i>Widgets</a></li>
+					</li>					
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> <i
-							class="menu-icon fa fa-bar-chart"></i>Charts
+							class="menu-icon fa fa-bar-chart"></i>Citas
 						</a>
 						<ul class="sub-menu children dropdown-menu">
 							<li><i class="menu-icon fa fa-line-chart"></i><a href="charts-chartjs.html">Chart JS</a></li>
@@ -151,22 +152,11 @@
 					<li class="menu-item-has-children dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false"> <i
-							class="menu-icon fa fa-area-chart"></i>Maps
+							class="menu-icon fa fa-area-chart"></i>Comprobante de pago
 						</a>
 						<ul class="sub-menu children dropdown-menu">
 							<li><i class="menu-icon fa fa-map-o"></i><a href="maps-gmap.html">Google Maps</a></li>
 							<li><i class="menu-icon fa fa-street-view"></i><a href="maps-vector.html">Vector Maps</a></li>
-						</ul>
-					</li>
-					<li class="menu-item-has-children dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> <i
-							class="menu-icon fa fa-glass"></i>Pages
-						</a>
-						<ul class="sub-menu children dropdown-menu">
-							<li><i class="menu-icon fa fa-sign-in"></i><a href="page-login.html">Login</a></li>
-							<li><i class="menu-icon fa fa-sign-in"></i><a href="page-register.html">Register</a></li>
-							<li><i class="menu-icon fa fa-paper-plane"></i><a href="pages-forget.html">Forget Pass</a></li>
 						</ul>
 					</li>
 				</ul>

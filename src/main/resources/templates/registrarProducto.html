@@ -1,88 +1,176 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title th:text="${titulo}"></title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-</head>
+<!doctype html>
+<html class="no-js" lang=""
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layoutP :: head">
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Veterinaria</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarSupportedContent"
-			aria-controls="navbarSupportedContent" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+    <!-- Menu left side -->
+    <aside th:replace="layout/layoutP :: aside-left"></aside>
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header th:replace="layout/layoutP :: header"></header>
+        <!-- Content -->
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="orders">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                            	<div class="card-header">
+                                	<strong class="card-title" th:text="${titulo}"></strong>
+                            	</div>
+                                <div class="card-body--">
+                                	<div class="card-body card-block">
+<!--                                 		<div th:object="${usuario}" th:remove="tag"> -->
+<!--                                 			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert"> -->
+<!--                                 				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li> -->
+<!--                                 			</ul> -->
+<!--                                 		</div>                                     -->
+                                    	<form th:action="@{/registrarProducto}" th:object="${producto}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    		<div class="row">
+                                                <div class="col-12">
+                                                	<div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Nombre</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{nombre}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+											<div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Precio</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{precioUnitario}" required>
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Peso</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{peso}" required>
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="select" class="form-control-label" style="margin-bottom: 4px;">Unidad</label>                                                        
+                                            			<select name="select" id="select" class="form-control" th:field="*{tipoPeso}">
+                                                			<option value="gr.">Gramos</option>
+                                               				<option value="kg.">Kilogramos</option>
+                                               				<option value="l.">Litros</option>
+                                               				<option value="ml.">Mililitros</option>
+                                            			</select>
+                                                	</div>
+                                                </div>		
+                                            </div>
+                                    		<div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Marca</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{marca}" required>
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="select" class="form-control-label" style="margin-bottom: 4px;">Tipo</label>                                                        
+                                            			<select name="select" id="select" class="form-control" th:field="*{tipo}">
+                                                			<option value="Accesorios">Accesorios</option>
+                                               				<option value="Alimento balanceado">Alimento balanceado</option>
+                                               				<option value="Antipulgas y pipetas">Antipulgas y pipetas</option>
+                                               				<option value="Camas">Camas</option>
+                                               				<option value="Carnazas y premios">Carnazas y premios</option>
+                                               				<option value="Correas y collares">Correas y collares</option>
+                                               				<option value="Farmacia">Farmacia</option>
+                                               				<option value="Higiene y bienestar">Higiene y bienestar</option>
+                                               				<option value="Juguetes">Juguetes</option>
+                                               				<option value="Ropa">Ropa</option>
+                                               				<option value="Transportadores">Transportadores</option>
+                                            			</select>
+                                                	</div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="textarea-input" class="control-label mb-1">Descripci&#243;n</label>
+                                                        <textarea name="textarea-input" id="textarea-input" rows="5" 
+                                                			placeholder="Breve descripci&#243;n del producto..." 
+                                                			class="form-control cc-exp" th:field="*{descripcion}"></textarea>                                                    
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="textarea-input" class="control-label mb-1">Recomendaciones</label>
+                                                        <textarea name="textarea-input" id="textarea-input" rows="5" 
+                                                			placeholder="Recomendaciones acerca del producto..." 
+                                                			class="form-control cc-exp" th:field="*{recomendaciones}"></textarea>                                                    
+                                                    </div>
+                                                </div>
+											</div>
+                                            <div class="row">
+												<div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label for="select" class="form-control-label" style="margin-bottom: 4px;">Estado</label>                                                        
+                                            			<select name="select" id="select" class="form-control" th:field="*{estado}">
+                                                			<option value="1">Activo</option>
+                                               				<option value="2">Inactivo</option>
+                                            			</select>
+                                                	</div>
+                                                </div>									
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Stock</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{stock}" required>
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-3">
+                                                	<br>
+                                                    <div class="form-group">
+                                                    	<a class="btn btn-secondary pull-left" th:href="@{/productos}">Cancelar</a>
+                                                    	<input type="submit" class="btn btn-primary pull-right" th:value="${boton}"/>                                                       
+                                                    </div>
+                                                </div>
+											</div>
+										</form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
 
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="#">Inicio
-						<span class="sr-only">(current)</span>
-				</a></li>
-				<li class="nav-item"><a class="nav-link"
-					th:href="@{/listaProductos}">Productos</a></li>
-				<li class="nav-item"><a class="nav-link"
-					th:href="@{/crearProducto}">Agregar Producto</a></li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-					role="button" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="false"> Dropdown </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">Action</a> <a
-							class="dropdown-item" href="#">Another action</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</div>
-	</nav>
-	<br>
-	<div class="container">
-	<h1 th:text="${titulo}" class="text-secondary border border-success"></h1>	
-		<form th:action="@{/registrarProducto}" th:object="${producto}"
-			method="post">
-			<table class="table table-bordered">
-				<tr>
-					<td>Nombre</td>
-					<td><input type="text" th:field="*{nombre}"
-						class="form-control" /></td>
-				</tr>
-				<tr>
-					<td>Descripción</td>
-					<td><input type="text" th:field="*{descripcion}"
-						class="form-control" /></td>
-				</tr>
-				<tr>
-					<td>Precio</td>
-					<td><input type="text" th:field="*{precioUnitario}"
-						class="form-control" /></td>
-				</tr>
-				<tr>
-					<td>Stock</td>
-					<td><input type="text" th:field="*{stock}"
-						class="form-control" /></td>
-				</tr>
-				<tr>
-					<td>Recomendaciones</td>
-					<td><input type="text" th:field="*{recomendaciones}"
-						class="form-control" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="Guardar producto"
-						class="btn btn-primary" /></td>
-				</tr>
-			</table>
-			<td><input type="hidden" th:field="*{idProducto}" /></td>
-		</form>
-	</div>
+    <!-- Scripts -->
+<!--     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script> -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!--  Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+    <!--Chartist Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="assets/js/init/weather-init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+    <script src="assets/js/init/fullcalendar-init.js"></script>
 </body>
 </html>

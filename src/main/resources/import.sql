@@ -11,5 +11,6 @@ INSERT INTO usuarios (id_usuario, usu_nombre, usu_apellido, usu_dni, usu_fecha_n
 INSERT INTO usuarios (id_usuario, usu_nombre, usu_apellido, usu_dni, usu_fecha_nac, usu_telefono, usu_celular, usu_email, usu_usuario, usu_clave, usu_rol, usu_foto) values (10,'Rena Vilma', 'Retama Chumpi', '55780245', '1992-03-06', '4500271', '931579099', 'rena8476@gmail.com', 'rena.vilma', '12345', '','');
 
 /* Populate tabla productos */
-INSERT INTO productos (id_producto,nombre,descripcion,precio_unitario,stock,recomendaciones,foto) values (1,'juguete hueso','Juguete para perros en forma de hueso',7,30,'Perros mayores de 1 mes','');
-INSERT INTO productos (id_producto,nombre,descripcion,precio_unitario,stock,recomendaciones,foto) values (2,'juguete pluma','Juguete para gatos en forma de pluma',5,18,'Gatos mayores de 1 mes','');
+INSERT INTO productos (id_producto,nombre,descripcion,precio_unitario,peso,tipo_peso,marca,tipo,stock,recomendaciones,foto,estado) values (1,'Juguete hueso','Juguete para perros en forma de hueso',7,'60','kg.','Linoli','Juguetes',18,'Perros mayores de 1 mes','',1);
+INSERT INTO productos (id_producto,nombre,descripcion,precio_unitario,peso,tipo_peso,marca,tipo,stock,recomendaciones,foto,estado) values (2,'Juguete pluma','Juguete para gatos en forma de pluma',5,'250','gr.','Linoli','Juguetes',30,'Gatos mayores de 1 mes','',2);
+
