@@ -1,0 +1,173 @@
+<!doctype html>
+<html class="no-js" lang=""
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layoutP :: head">
+<body>
+    <!-- Menu left side -->
+    <aside th:replace="layout/layoutP :: aside-left"></aside>
+    <!-- Right Panel -->
+    <div id="right-panel" class="right-panel">
+        <!-- Header-->
+        <header th:replace="layout/layoutP :: header"></header>
+        <!-- Content -->
+        <div class="content">
+            <div class="animated fadeIn">
+                <div class="orders">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card">
+                            	<div class="card-header">
+                                	<strong class="card-title" th:text="${titulo}"></strong>
+                            	</div>
+                                <div class="card-body--">
+                                	<div class="card-body card-block">
+<!--                                 		<div th:object="${persona}" th:remove="tag"> -->
+<!--                                 			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" role="alert"> -->
+<!--                                 				<li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li> -->
+<!--                                 			</ul> -->
+<!--                                 		</div>                                     -->
+                                    	<form th:action="@{/registrarPersona}" th:object="${persona}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    		<div class="row">
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Nombres</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{nombre}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group"> 
+                                                        <label for="cc-exp" class="control-label mb-1">Apellidos</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{apellido}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">DNI</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{dni}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    		<div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Correo electr&#243;nico</label>
+                                                        <input type="email" class="form-control cc-exp" th:field="*{email}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">D&#237;a</label>
+                                                        <input type="Text" class="form-control cc-exp" th:field="*{dia}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    	<small class="form-text text-muted">Fecha de nacimiento</small>
+                                                    </div>
+                                                </div>
+<!--                                                 <div class="col-sm-2"> -->
+<!--                                                     <div class="form-group"> -->
+<!--                                                         <label for="cc-exp" class="control-label mb-1">Mes</label> -->
+<!--                                                         <input type="text" class="form-control cc-exp"> -->
+<!--                                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                         -->
+<!--                                                     </div> -->
+<!--                                                 </div> -->
+												<div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label for="select" class="form-control-label" style="margin-bottom: 4px;">Mes</label>                                                        
+                                            			<select name="select" id="select" class="form-control" th:field="*{mes}">
+                                                			<option value="01">Enero</option>
+                                               				<option value="02">Febrero</option>
+                                                			<option value="03">Marzo</option>
+                                                			<option value="04">Abril</option>
+                                                			<option value="05">Mayo</option>
+                                                			<option value="06">Junio</option>
+                                                			<option value="07">Julio</option>
+                                                			<option value="08">Agosto</option>
+                                                			<option value="09">Setiembre</option>
+                                                			<option value="10">Octubre</option>
+                                                			<option value="11">Noviembre</option>
+                                                			<option value="12">Diciembre</option>
+                                            			</select>
+                                                	</div>
+                                                </div>									
+                                                <div class="col-sm-2">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">A&#241;o</label>
+                                                        <input type="Text" class="form-control cc-exp" th:field="*{anio}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+											</div>
+											<div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Celular</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{celular}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>
+                                                 <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Tel&#233;fono fijo</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{telefono}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label for="cc-exp" class="control-label mb-1">Direcci&#243;n</label>
+                                                        <input type="text" class="form-control cc-exp" th:field="*{direccion}">
+                                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div class="row">
+                                            	<div class="col-12">
+                                            		<input type="submit" class="btn btn-primary pull-right" th:value="${boton}"/>
+                                            	</div>
+                                            </div>
+                                    	</form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <!-- Scripts -->
+<!--     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script> -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!--  Chart js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.7.3/dist/Chart.bundle.min.js"></script>
+
+    <!--Chartist Chart-->
+    <script src="https://cdn.jsdelivr.net/npm/chartist@0.11.0/dist/chartist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist-plugin-legend@0.6.2/chartist-plugin-legend.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery.flot@0.8.3/jquery.flot.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-pie@1.0.0/src/jquery.flot.pie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flot-spline@0.0.1/js/jquery.flot.spline.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/simpleweather@3.1.0/jquery.simpleWeather.min.js"></script>
+    <script src="assets/js/init/weather-init.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+    <script src="assets/js/init/fullcalendar-init.js"></script>
+</body>
+</html>

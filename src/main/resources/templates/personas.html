@@ -25,41 +25,42 @@
                             </div>                           
                             <div class="card-body">
                             	<h4 class="card-title">
-                            		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/producto}" class="btn btn-success btn-xs" style="font-size: 14px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar producto</a>
+                            		<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/persona}" class="btn btn-success btn-xs" style="font-size: 14px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar persona</a>
+                            		<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/persona}" class="btn btn-success btn-xs" style="font-size: 14px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar cliente</a>
                             	</h4>
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered" style="font-size: 13px;">
                                     <thead class="thead-inverse">
                                         <tr style="text-align: center;">
-                                        	<th>Id</th>
-                                            <th>Nombre</th>
-                                            <th>Descripci&#243;n</th>
-                                            <th>Precio</th>
-                                            <th>Peso</th>
-                                            <th>Marca</th>
-                                            <th>Tipo</th>
-                                            <th>Recomendaciones</th>
-                                            <th>Stock</th>
-                                            <th>Estado</th>
-                                            <th sec:authorize="hasRole('ROLE_ADMIN')">Acciones</th>
+                                        	<th style="vertical-align: middle;">Id</th>
+                                            <th style="vertical-align: middle;">Nombre</th>
+                                            <th style="vertical-align: middle;">Apellido</th>
+                                            <th style="vertical-align: middle;">DNI</th>
+                                            <th style="vertical-align: middle;">Fecha de Nacimiento</th>
+                                            <th style="vertical-align: middle;">Telefono</th>
+                                            <th style="vertical-align: middle;">Celular</th>
+                                            <th style="vertical-align: middle;">Email</th>
+                                            <th style="vertical-align: middle;">Direcci&#243;n</th>
+                                            <th style="vertical-align: middle;" sec:authorize="hasRole('ROLE_ADMIN')">Tipo</th>
+                                            <th style="vertical-align: middle;">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="producto: ${productos}">
+                                        <tr th:each="persona: ${personas}">
 <!--                                             <td sec:authorize="hasRole('ROLE_USER')"> -->
 <!--                                             	<a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${cliente.id}"  -->
 <!--                                             		th:text="${cliente.id}"> -->
 <!--                                             	</a> -->
 <!--                                             </td> -->
-											<td th:text="${producto.idProducto}"></td>
-                                            <td th:text="${producto.nombre}"></td>
-                                            <td th:text="${producto.descripcion}"></td>
-                                            <td th:text="'S/ ' + ${producto.precioUnitario}" nowrap></td>                                            
-                                            <td th:text="${producto.peso}+' '+${producto.tipoPeso}" nowrap></td>
-                                            <td th:text="${producto.marca}"></td>
-                                            <td th:text="${producto.tipo}"></td>
-                                            <td th:text="${producto.recomendaciones}"></td>
-                                            <td th:text="${producto.stock}"></td>
-                                            <td th:text="${producto.descEstado}"></td>
+											<td th:text="${persona.idPersona}"></td>
+                                            <td th:text="${persona.nombre}"></td>
+                                            <td th:text="${persona.apellido}"></td>
+                                            <td th:text="${persona.dni}"></td>                                            
+                                            <td th:text="${persona.strFecha}"></td>
+                                            <td th:text="${persona.telefono}"></td>
+                                            <td th:text="${persona.celular}"></td>
+                                            <td th:text="${persona.email}"></td>
+                                            <td th:text="${persona.direccion}"></td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')" th:text="${persona.descRol}"></td>
 <!--                                             <td sec:authorize="hasRole('ROLE_ADMIN')"> -->
 <!--                                             	<a class="btn btn-primary btn-xs"  -->
 <!--                                             		th:href="@{/form/} + ${usuario.id}"  -->
@@ -74,13 +75,13 @@
 <!--                                             	</a> -->
 <!--                                             </td> -->
                                             <td>
-                                            	<div sec:authorize="hasRole('ROLE_ADMIN')" class="btn-group">
+                                            	<div class="btn-group">
                                             		<a class="btn btn-info" title="Editar"
-                                            			th:href="@{/registrarProducto/} + ${producto.idProducto}">
+                                            			th:href="@{/registrarPersona/} + ${persona.idPersona}">
                                             			<i class="fa fa-pencil"></i>
                                             		</a>                                          		
                                             		<a class="btn btn-danger" href="#" title="Eliminar"
-                                            			th:href="@{/eliminarProducto/} + ${producto.idProducto}"
+                                            			th:href="@{/eliminarPersona/} + ${persona.idPersona}"
                                             			onclick="return confirm('Estas seguro que quieres eliminar?');">
                                             			<i class="fa fa-times"></i>
                                             		</a>

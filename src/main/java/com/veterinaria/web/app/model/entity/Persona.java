@@ -18,70 +18,65 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario implements Serializable {
+@Table(name = "personas")
+public class Persona implements Serializable {
 
 	private static final long serialVersionUID = 8403187889165947106L;
 
 	@Id
-	@Column(name = "id_usuario")
+	@Column(name = "id_persona")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idUsuario;
+	private Long idPersona;
 
 	@NotEmpty
-	@Column(name = "usu_nombre")
+	@Column(name = "pe_nombre")
 	private String nombre;
 	
 	@NotEmpty
-	@Column(name = "usu_apellido")
+	@Column(name = "pe_apellido")
 	private String apellido;
 	
 	@NotEmpty
-	@Column(name = "usu_dni")
+	@Column(name = "pe_dni")
 	private String dni;	
 	
-	@Column(name = "usu_fecha_nac")
+	@Column(name = "pe_fecha_nac")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaNacimiento;
 	
 	@NotEmpty
-	@Column(name = "usu_telefono")
+	@Column(name = "pe_telefono")
 	private String telefono;
 	
 	@NotEmpty
-	@Column(name = "usu_celular")
+	@Column(name = "pe_celular")
 	private String celular;
 	
 	@NotEmpty
 	@Email
-	@Column(name = "usu_email")
-	private String email;	
-
-	@NotEmpty
-	@Column(name = "usu_usuario")
-	private String usuario;
+	@Column(name = "pe_email")
+	private String email;
 	
 	@NotEmpty
-	@Column(name = "usu_clave")
-	private String clave;
+	@Column(name = "pe_direccion")
+	private String direccion;
 	
-	@Column(name = "usu_rol")
+	@NotEmpty
+	@Column(name = "pe_rol")
 	private String rol;
-	
-	@Column(name = "usu_foto")
-	private String foto;
 	
 	private String dia;
 	private String mes;
 	private String anio;
-	private String direccion;
-	
-	public Long getIdUsuario() {
-		return idUsuario;
+	private String descRol;
+	private String strFecha;
+
+	public Long getIdPersona() {
+		return idPersona;
 	}
 
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
+	public void setIdPersona(Long idPersona) {
+		this.idPersona = idPersona;
 	}
 
 	public String getNombre() {
@@ -112,8 +107,8 @@ public class Usuario implements Serializable {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) throws ParseException {
-		this.fechaNacimiento = toDate();
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public String getTelefono() {
@@ -140,20 +135,12 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getDireccion() {
+		return direccion;
 	}
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	public String getClave() {
-		return clave;
-	}
-
-	public void setClave(String clave) {
-		this.clave = clave;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
 	public String getRol() {
@@ -163,14 +150,6 @@ public class Usuario implements Serializable {
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
-
-	public String getFoto() {
-		return foto;
-	}
-
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}	
 
 	public String getDia() {
 		return dia;
@@ -192,23 +171,50 @@ public class Usuario implements Serializable {
 		return anio;
 	}
 
-	public void setAño(String anio) {
+	public void setAnio(String anio) {
 		this.anio = anio;
 	}	
 
-	public String getDireccion() {
-		return direccion;
+	public String getDescRol() {
+		return descRol;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setDescRol(String descRol) {
+		this.descRol = descRol;
+	}	
+
+	public String getStrFecha() {
+		return strFecha;
+	}
+
+	public void setStrFecha(String strFecha) {
+		this.strFecha = strFecha;
 	}
 
 	@Override
 	public String toString() {
 		return nombre + " " + apellido;
 	}
-	
+		
+	public Persona(Long idPersona, @NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String dni,
+			Date fechaNacimiento, @NotEmpty String telefono, @NotEmpty String celular, @NotEmpty @Email String email,
+			@NotEmpty @Email String direccion, @NotEmpty String rol) {
+		this.idPersona = idPersona;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.fechaNacimiento = fechaNacimiento;
+		this.telefono = telefono;
+		this.celular = celular;
+		this.email = email;
+		this.direccion = direccion;
+		this.rol = rol;
+	}
+
+	public Persona() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Date toDate() throws ParseException {
 		String dateAux = anio.concat("-").concat(mes).concat("-").concat(dia);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

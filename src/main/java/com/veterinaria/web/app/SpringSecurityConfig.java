@@ -54,7 +54,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 		
 		build.inMemoryAuthentication()
-		.withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
+		.withUser(users.username("admin").password("12345").roles("ADMIN"))
 		.withUser(users.username("andres").password("12345").roles("USER"));
 	}
 }
