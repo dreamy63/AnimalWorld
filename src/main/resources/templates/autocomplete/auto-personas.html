@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+	<script type="text/javascript" th:fragment="cliente">
+		$(document).ready(function() {
+
+			$("#buscar_cliente").autocomplete({
+
+				source : function(request, response) {
+					$.ajax({
+						url : "/cargar-personas/" + request.term,
+						dataType : "json",
+						data : {
+							term : request.term
+						},
+						success : function(data) {
+							response($.map(data, function(persona) {
+								return {
+									idPersona : persona.idPersona,
+									nombre : persona.nombre,
+									apellido : persona.apellido,
+								};
+							}));
+						},
+					});
+				},
+			});
+		});
+	</script>
+</body>
+</html>

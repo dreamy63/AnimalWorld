@@ -37,3 +37,9 @@ INSERT INTO usuarios_web (id_usuario, usu_usuario, usu_clave, usu_foto, usu_esta
 INSERT INTO usuarios_web (id_usuario, usu_usuario, usu_clave, usu_foto, usu_estado, id_persona) values (8,'reina.contar', '12345','','1','8');
 INSERT INTO usuarios_web (id_usuario, usu_usuario, usu_clave, usu_foto, usu_estado, id_persona) values (9,'grandeventura76', '12345','','1','9');
 INSERT INTO usuarios_web (id_usuario, usu_usuario, usu_clave, usu_foto, usu_estado, id_persona) values (10,'rena.vilma', '12345','','1','10');
+
+/* Populate tabla mascotas */
+INSERT INTO mascotas(id_mascota,ma_nombre,id_tipo_mascota,ma_raza,ma_sexo,ma_fecha_nac,ma_color,ma_estado,id_persona) values (1,'Yura',1,'Mestizo','H','2015-04-10','Crema',1,1)
+INSERT INTO mascotas(id_mascota,ma_nombre,id_tipo_mascota,ma_raza,ma_sexo,ma_fecha_nac,ma_color,ma_estado,id_persona) values (2,'Pancho',1,'Mestizo','M','2019-01-01','Marrón',1,2)
+INSERT INTO mascotas(id_mascota,ma_nombre,id_tipo_mascota,ma_raza,ma_sexo,ma_fecha_nac,ma_color,ma_estado,id_persona) values (3,'Musashi',1,'Husky','M','2011-12-20','Blanco con negro',2,1)
+INSERT INTO mascotas(id_mascota,ma_nombre,id_tipo_mascota,ma_raza,ma_sexo,ma_fecha_nac,ma_color,ma_estado,id_persona) values (4,'Tobby',2,'Persa','M','2018-09-17','Gris',2,7)
