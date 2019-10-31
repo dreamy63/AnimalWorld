@@ -40,14 +40,14 @@
                                                     <div class="form-group">
                                                         <label for="select" class="form-control-label" style="margin-bottom: 4px;">Tipo de Mascota</label>                                                        
                                             			<select name="select" id="select" class="form-control" th:field="*{tipoMascota}">
-                                                			<option value="1">Perro</option>
-                                               				<option value="2">Gato</option>
-                                                			<option value="3">H&#225;mster</option>
-                                                			<option value="4">Conejo</option>
-                                                			<option value="5">Ave</option>
-                                                			<option value="6">Reptil</option>
-                                                			<option value="7">Pez</option>
-                                                			<option value="8">Otro</option>
+                                                			<option value=1>Perro</option>
+                                               				<option value=2>Gato</option>
+                                                			<option value=3>H&#225;mster</option>
+                                                			<option value=4>Conejo</option>
+                                                			<option value=5>Ave</option>
+                                                			<option value=6>Reptil</option>
+                                                			<option value=7>Pez</option>
+                                                			<option value=8>Otro</option>
                                             			</select>
                                                 	</div>
                                                 </div>
@@ -72,7 +72,7 @@
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <label for="cc-exp" class="control-label mb-1">D&#237;a</label>
-                                                        <input type="Text" class="form-control cc-exp" th:field="*{dia}" placeholder="D&#237;a de nacimiento">
+                                                        <input type="text" class="form-control cc-exp" th:field="*{dia}" placeholder="D&#237;a de nacimiento">
                                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
                                                     </div>
                                                 </div>
@@ -98,7 +98,7 @@
                                                 <div class="col-sm-3">
                                                     <div class="form-group">
                                                         <label for="cc-exp" class="control-label mb-1">A&#241;o</label>
-                                                        <input type="Text" class="form-control cc-exp" th:field="*{anio}" placeholder="A&#241;o de nacimiento">
+                                                        <input type="text" class="form-control cc-exp" th:field="*{anio}" placeholder="A&#241;o de nacimiento">
                                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
                                                     </div>
                                                 </div>
@@ -107,7 +107,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label for="cc-exp" class="control-label mb-1">Due&#241;o</label>
-                                                        <input type="Text" class="form-control cc-exp" name="buscar_cliente" id="buscar_cliente">                                                    
+                                                        <input type="text" class="form-control cc-exp" th:field="*{idPersona}">                                                    
                                                     </div>
                                                 </div>
 											</div>
@@ -115,7 +115,7 @@
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label for="cc-exp" class="control-label mb-1">Color</label>
-                                                        <input type="Text" class="form-control cc-exp" th:field="*{color}">
+                                                        <input type="text" class="form-control cc-exp" th:field="*{color}">
                                                         <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>                                                        
                                                     </div>
                                                 </div>
@@ -123,8 +123,8 @@
                                                     <div class="form-group">
                                                         <label for="select" class="form-control-label" style="margin-bottom: 4px;">Estado</label>                                                        
                                             			<select name="select" id="select" class="form-control" th:field="*{estado}">
-                                                			<option value="1">Activo</option>
-                                               				<option value="2">Inactivo</option>
+                                                			<option value=1>Activo</option>
+                                               				<option value=2>Inactivo</option>
                                             			</select>
                                                 	</div>
                                                 </div>

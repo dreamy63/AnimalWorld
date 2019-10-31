@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.veterinaria.web.app.model.entity.Mascota;
+import com.veterinaria.web.app.model.entity.Persona;
 
 public interface IMascotaService {
 
@@ -24,5 +25,7 @@ public interface IMascotaService {
 	public Mascota findMascotaById(Long id);
 	
 	public void deleteMascota(Long id);
+	
+	public Persona fetchByIdWithPersona(Long id);
 
 }

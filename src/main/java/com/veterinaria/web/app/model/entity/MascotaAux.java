@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
@@ -19,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="mascotas")
-public class Mascota implements Serializable{
+public class MascotaAux implements Serializable{
 
 	private static final long serialVersionUID = -1778291452931750038L;
 	
@@ -51,6 +52,8 @@ public class Mascota implements Serializable{
 	@Column(name = "ma_estado")
 	private Integer estado;
 	
+	private Persona persona;
+	
 	@Column(name = "id_persona")
 	private Long idPersona;
 	
@@ -60,7 +63,6 @@ public class Mascota implements Serializable{
 	private String dia;
 	private String mes;
 	private String anio;
-	private String duenio;
 
 	public Long getIdMascota() {
 		return idMascota;
@@ -124,14 +126,14 @@ public class Mascota implements Serializable{
 
 	public void setEstado(Integer estado) {
 		this.estado = estado;
-	}	
-
-	public Long getIdPersona() {
-		return idPersona;
 	}
 
-	public void setIdPersona(Long idPersona) {
-		this.idPersona = idPersona;
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 	public static long getSerialversionuid() {
@@ -186,12 +188,12 @@ public class Mascota implements Serializable{
 		this.anio = anio;
 	}
 
-	public String getDuenio() {
-		return duenio;
+	public Long getIdPersona() {
+		return idPersona;
 	}
 
-	public void setDuenio(String duenio) {
-		this.duenio = duenio;
+	public void setIdPersona(Long idPersona) {
+		this.idPersona = idPersona;
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,10 @@ public class MascotaServiceImpl implements IMascotaService{
 	public Page<Mascota> findAll(Pageable pageable) {
 		Page<Mascota> auxMascota = mascotaDao.findAll(pageable);
 		auxMascota = CommonUtils.calcularEdad(auxMascota);
+		for(Mascota objMascota : auxMascota) {
+			Persona persona = mascotaDao.fetchByIdWithPersona(objMascota.getIdPersona());
+			objMascota.setDuenio(persona.getNombre()+" "+persona.getApellido());
+		}
 		return auxMascota;
 	}
 
@@ -75,6 +80,12 @@ public class MascotaServiceImpl implements IMascotaService{
 	public void deleteMascota(Long id) {
 		mascotaDao.deleteById(id);
 		
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Persona fetchByIdWithPersona(Long id) {
+		return mascotaDao.fetchByIdWithPersona(id);
 	}
 	
 }

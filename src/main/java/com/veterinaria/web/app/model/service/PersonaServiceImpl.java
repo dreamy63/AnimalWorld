@@ -9,11 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.veterinaria.web.app.model.dao.IPersonaDao;
-import com.veterinaria.web.app.model.dao.IUsuarioDao;
 import com.veterinaria.web.app.model.entity.Persona;
-import com.veterinaria.web.app.model.entity.Usuario;
 import com.veterunaria.web.app.util.utils.CommonUtils;
-import com.veterunaria.web.app.util.utils.ParameterDetails;
 
 @Service
 public class PersonaServiceImpl implements IPersonaService{

@@ -1,6 +1,9 @@
 package com.veterinaria.web.app.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +106,14 @@ public class MascotaController {
 		}
 		
 		String mensajeFlash = (mascota.getIdMascota() != null) ? "Mascota editado con éxito!" : "Mascota creado con éxito!";
-
+		Date date = new Date();
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(mascota.getAnio()+"-"+mascota.getMes()+"-"+mascota.getDia());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		mascota.setMascotaFechaNac(date);
 		mascotaService.save(mascota);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
