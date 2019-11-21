@@ -7,6 +7,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -61,6 +62,53 @@ public class CommonUtils {
 	}
 	
 	public static Page<Mascota> calcularEdad (Page<Mascota> mascota) {
+		
+		Map<Integer, String> objMpTipoMascota = listaTipoMascota();
+		Map<Integer, String> objMpTipoEstado = listaTipoEstado();
+		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");		
+		LocalDate ahora = LocalDate.now();
+		for (Mascota objMascota: mascota) {
+			
+			//Calcular edad
+			String auxEdad="";
+			LocalDate fechaNac = LocalDate.parse(CommonUtils.convertDatetoString(
+					objMascota.getMascotaFechaNac(), Constants.STR_DATE_FORMAT), fmt);
+			Period periodo = Period.between(fechaNac, ahora);
+			
+			int auxAnio = periodo.getYears();
+			int auxMes = periodo.getMonths();
+			int auxDia = periodo.getDays();
+			String strAño = auxAnio + " año";
+			String strMes = auxMes + " mes";
+			String strDia = auxDia + " días";			
+			
+			if(auxAnio > 1) {
+				strAño = auxAnio + " años";
+			}
+			if(auxMes > 1) {
+				strMes = auxMes + " meses";
+			}		
+
+			if(periodo.getYears()==0) {
+				if(periodo.getMonths()==0) {
+					auxEdad = strDia;
+				}else {
+					auxEdad = strMes + " " + strDia;
+				}			
+			}else {
+				auxEdad = strAño + " " + strMes;
+			}
+			objMascota.setEdad(auxEdad);
+			
+			//Asignar estado
+			objMascota.setEtiquetaTipo(objMpTipoMascota.get(objMascota.getTipoMascota()));
+			//Asignar tipo mascota
+			objMascota.setEtiquetaEstado(objMpTipoEstado.get(objMascota.getEstado()));
+		}		
+		return mascota;
+	}
+	
+	public static List<Mascota> calcularEdad (List<Mascota> mascota) {
 		
 		Map<Integer, String> objMpTipoMascota = listaTipoMascota();
 		Map<Integer, String> objMpTipoEstado = listaTipoEstado();

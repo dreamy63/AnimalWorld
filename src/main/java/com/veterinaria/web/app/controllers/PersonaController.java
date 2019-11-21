@@ -1,6 +1,9 @@
 package com.veterinaria.web.app.controllers;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.veterinaria.web.app.model.entity.Persona;
 import com.veterinaria.web.app.model.service.IPersonaService;
 import com.veterinaria.web.app.util.paginator.PageRender;
+import com.veterunaria.web.app.util.utils.CommonUtils;
 import com.veterunaria.web.app.util.utils.Constants;
 
 @Controller
@@ -114,7 +118,17 @@ public class PersonaController {
 		}
 		
 		String mensajeFlash = (persona.getIdPersona() != null) ? "Persona editado con éxito!" : "Persona creado con éxito!";
-
+		
+		Date date = new Date();
+		try {
+			if(!CommonUtils.isNullOrEmpty(persona.getAnio()) && !CommonUtils.isNullOrEmpty(persona.getMes()) && 
+					!CommonUtils.isNullOrEmpty(persona.getDia()))
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(persona.getAnio()+"-"+persona.getMes()+"-"+persona.getDia());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		persona.setFechaNacimiento(date);
 		personaService.save(persona);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);

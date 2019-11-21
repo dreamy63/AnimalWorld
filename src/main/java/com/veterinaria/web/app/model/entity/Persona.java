@@ -47,7 +47,6 @@ public class Persona implements Serializable {
 	@Column(name = "pe_telefono")
 	private String telefono;
 	
-	@NotEmpty
 	@Column(name = "pe_celular")
 	private String celular;
 	

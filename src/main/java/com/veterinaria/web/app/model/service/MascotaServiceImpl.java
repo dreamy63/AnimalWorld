@@ -1,5 +1,6 @@
 package com.veterinaria.web.app.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import com.veterinaria.web.app.model.dao.IMascotaDao;
 import com.veterinaria.web.app.model.entity.Mascota;
 import com.veterinaria.web.app.model.entity.Persona;
 import com.veterunaria.web.app.util.utils.CommonUtils;
+
+import javassist.expr.NewArray;
 
 @Service
 public class MascotaServiceImpl implements IMascotaService{
@@ -65,9 +68,16 @@ public class MascotaServiceImpl implements IMascotaService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<Mascota> findByNombre(String term) {
-		return mascotaDao.findByNombreLikeIgnoreCase("%"+term+"%");
+		List<Mascota> auxMascota = mascotaDao.findByNombreLikeIgnoreCase("%"+term+"%");
+		auxMascota = CommonUtils.calcularEdad(auxMascota);
+		for(Mascota objMascota : auxMascota) {
+			Persona persona = mascotaDao.fetchByIdWithPersona(objMascota.getIdPersona());
+			objMascota.setDuenio(persona.getNombre()+" "+persona.getApellido());
+		}
+		
+		return auxMascota;
 	}
-
+	
 	@Override
 	@Transactional
 	public Mascota findMascotaById(Long id) {
@@ -88,4 +98,32 @@ public class MascotaServiceImpl implements IMascotaService{
 		return mascotaDao.fetchByIdWithPersona(id);
 	}
 	
+	@Override
+	@Transactional(readOnly = true)
+	public Persona selectPersonaDni(String id) {
+		return mascotaDao.selectPersonaDni(id);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Mascota> selectPersonaNombre(String id) {
+		List<Persona> auxPersona = new ArrayList<Persona>();
+		List<Mascota> auxMascota = new ArrayList<Mascota>();
+		auxPersona = mascotaDao.selectPersonaNombre(id);
+		for (Persona objPersona: auxPersona) {
+			auxMascota.addAll(mascotaDao.findByPersonaId(objPersona.getIdPersona()));
+		}
+		auxMascota = CommonUtils.calcularEdad(auxMascota);
+		for(Mascota objMascota : auxMascota) {
+			Persona persona = mascotaDao.fetchByIdWithPersona(objMascota.getIdPersona());
+			objMascota.setDuenio(persona.getNombre()+" "+persona.getApellido());
+		}
+		return auxMascota;
+	}
+
+	@Override
+	public List<Mascota> findByPersonaId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -2,9 +2,9 @@ package com.veterinaria.web.app.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
@@ -36,16 +37,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.veterinaria.web.app.model.beans.QueryHistoria;
 import com.veterinaria.web.app.model.entity.Mascota;
 import com.veterinaria.web.app.model.entity.Persona;
 import com.veterinaria.web.app.model.service.IMascotaService;
 import com.veterinaria.web.app.model.service.IPersonaService;
 import com.veterinaria.web.app.util.paginator.PageRender;
 import com.veterunaria.web.app.util.utils.CommonUtils;
+import com.veterunaria.web.app.util.utils.Constants;
 
 @Controller
 @SessionAttributes("mascota")
-public class MascotaController {
+public class HistoriaController {
 	
 	@Autowired
 	private IPersonaService personaService;
@@ -56,7 +59,7 @@ public class MascotaController {
 	private IMascotaService mascotaService;	
 
 	@PreAuthorize("hasRole('ROLE_USER')")
-	@GetMapping(value = "/verMascota/{id}")
+	@GetMapping(value = "/verHistoria/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
 		Mascota mascota = mascotaService.findMascotaById(id);
@@ -70,7 +73,7 @@ public class MascotaController {
 		return "ver";
 	}
 	
-	@RequestMapping(value = {"/mascotas"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/historias"}, method = RequestMethod.GET)
 	public String listarUsuarios(@RequestParam(name = "page", defaultValue = "0") int page, Model model,
 			Authentication authentication,
 			HttpServletRequest request) {
@@ -78,107 +81,48 @@ public class MascotaController {
 		Pageable pageRequest = PageRequest.of(page, 5);
 		String titulo = "Mascotas";
 		Page<Mascota> mascotas = mascotaService.findAll(pageRequest);
+		QueryHistoria query = new QueryHistoria();
 		
 		PageRender<Mascota> pageRender = new PageRender<Mascota>("/mascotas", mascotas);
 		model.addAttribute("titulo", titulo);
+		model.addAttribute("query", query);
+		model.addAttribute("boton", "Buscar");
 		model.addAttribute("mascotas", mascotas);
 		model.addAttribute("page", pageRender);
-		return "mascotas";
+		return "historias";
 	}
-
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
-	@RequestMapping(value = "/mascota")
-	public String crear(Map<String, Object> model) {
-		
-		String titulo = "Registrar nueva mascota";
-		Mascota mascota = new Mascota();
-		model.put("mascota", mascota);
-		model.put("titulo", titulo);
-		model.put("boton", "Registrar");
-		return "registrarMascota";
-	}
-
-	@RequestMapping(value = "/registrarMascota", method = RequestMethod.POST)
-	public String guardar(Mascota mascota, BindingResult result, Model model,
+	
+	@RequestMapping(value = "/buscarHistoria", method = RequestMethod.POST)
+	public String guardar(QueryHistoria query, BindingResult result, Model model,
 			RedirectAttributes flash, SessionStatus status) {
 
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Mascota");
-			return "registrarMascota";
+		Pageable pageRequest = PageRequest.of(0, 5);
+		String titulo = "Mascotas";
+		List<Mascota> mascotas = new ArrayList<>();
+		if(!CommonUtils.isNullOrEmpty(query.getNombreMascota()) && CommonUtils.isNullOrEmpty(query.getNombreDuenio())) {
+			mascotas = mascotaService.findByNombre(query.getNombreMascota());
+		}else if(CommonUtils.isNullOrEmpty(query.getNombreMascota()) && !CommonUtils.isNullOrEmpty(query.getNombreDuenio())) {
+			mascotas = mascotaService.selectPersonaNombre(query.getNombreDuenio());
+		}else if(!CommonUtils.isNullOrEmpty(query.getNombreMascota()) && !CommonUtils.isNullOrEmpty(query.getNombreDuenio())) {
+			
+			
 		}
 		
-		String mensajeFlash = (mascota.getIdMascota() != null) ? "Mascota editado con éxito!" : "Mascota creado con éxito!";		
-		Persona objPersona = mascotaService.selectPersonaDni(mascota.getDniDuenio());
-		if(CommonUtils.isNullOrEmpty(objPersona)) {
-			String titulo = "";
-			if(hasRole("ROLE_ADMIN")) {
-				titulo = "Registrar nueva persona";
-			} else {
-				titulo = "Registrar nuevo cliente";
-			}
-			Map<String, Object> model2 = new HashMap<>();
-			Persona persona = new Persona();
-			model2.put("persona", persona);
-			model2.put("titulo", titulo);
-			return "redirect:/persona";
-		}else {
-			Date date = new Date();
-			try {
-				if(!CommonUtils.isNullOrEmpty(mascota.getAnio()) && !CommonUtils.isNullOrEmpty(mascota.getMes()) && 
-						!CommonUtils.isNullOrEmpty(mascota.getDia()))
-				date = new SimpleDateFormat("yyyy-MM-dd").parse(mascota.getAnio()+"-"+mascota.getMes()+"-"+mascota.getDia());
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}  
-			mascota.setMascotaFechaNac(date);
-			mascota.setIdPersona(objPersona.getIdPersona());
-			mascotaService.save(mascota);
-			status.setComplete();
-			flash.addFlashAttribute("success", mensajeFlash);
-			return "redirect:/mascotas";
-		}
+		
+		int start = 0;
+		int end = (start + 5) > mascotas.size() ? mascotas.size() : (start + 5);
+		Page<Mascota> pages = new PageImpl<Mascota>(mascotas.subList(start, end), pageRequest , mascotas.size());
+		
+		PageRender<Mascota> pageRender = new PageRender<Mascota>("/mascotas", pages);
+		model.addAttribute("titulo", titulo);
+		model.addAttribute("query", query);
+		model.addAttribute("boton", "Buscar");
+		model.addAttribute("mascotas", mascotas);
+		model.addAttribute("page", pageRender);
+		return "historias";
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	@RequestMapping(value = "/registrarMascota/{idMascota}")
-	public String editar(@PathVariable(value = "idMascota") Long id, Map<String, Object> model, RedirectAttributes flash) {
-
-		Mascota mascota = null;
-
-		if (id > 0) {
-			mascota = mascotaService.findOne(id);
-			if (mascota == null) {
-				flash.addFlashAttribute("error", "El ID del mascota no existe!");
-				return "redirect:/mascotas";
-			}
-		} else {
-			flash.addFlashAttribute("error", "El ID del mascota no puede ser cero!");
-			return "redirect:/mascotas";
-		}
-		Date objFechaNac = mascota.getMascotaFechaNac();
-		mascota.setDia(Integer.toString(objFechaNac.getDay()));
-		mascota.setMes(Integer.toString(objFechaNac.getMonth()));
-		mascota.setAnio(Integer.toString(objFechaNac.getYear()));
-		model.put("mascota", mascota);
-		model.put("titulo", "Editar mascota");
-		model.put("boton", "Actualizar");
-		return "registrarMascota";
-	}
-
-	@Secured("ROLE_ADMIN")
-	@RequestMapping(value = "/eliminarMascota/{idMascota}")
-	public String eliminar(@PathVariable(value = "idMascota") Long id, RedirectAttributes flash) {
-
-		if (id > 0) {
-			Mascota mascota = mascotaService.findOne(id);
-			mascotaService.delete(id);
-			flash.addFlashAttribute("success", "Mascota eliminado con éxito!");			
-		}
-		return "redirect:/mascotas";
-	}
-	
-	@GetMapping(value = "/cargar-personas/{term}", produces = { "application/json" })
+	@GetMapping(value = "/cargar-historias/{term}", produces = { "application/json" })
 	public @ResponseBody List<Persona> cargarPersonas(@PathVariable String term) {
 		return personaService.findByNombre(term);
 	}

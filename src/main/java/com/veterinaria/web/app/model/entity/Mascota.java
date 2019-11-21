@@ -61,6 +61,7 @@ public class Mascota implements Serializable{
 	private String mes;
 	private String anio;
 	private String duenio;
+	private String dniDuenio;
 
 	public Long getIdMascota() {
 		return idMascota;
@@ -193,5 +194,15 @@ public class Mascota implements Serializable{
 	public void setDuenio(String duenio) {
 		this.duenio = duenio;
 	}
+
+	public String getDniDuenio() {
+		return dniDuenio;
+	}
+
+	public void setDniDuenio(String dniDuenio) {
+		this.dniDuenio = dniDuenio;
+	}
+	
+	
 
 }

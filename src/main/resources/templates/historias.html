@@ -20,9 +20,30 @@
                                 <strong class="card-title" th:text="${titulo}"></strong>
                             </div>                           
                             <div class="card-body">
-                            	<h4 class="card-title">
-                            		<a th:href="@{/mascota}" class="btn btn-success btn-xs" style="font-size: 14px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Agregar mascota</a>                            		
-                            	</h4>
+                            	<form th:action="@{/buscarHistoria}" th:object="${query}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            		<div class="row">
+                            			<div class="col-6">
+                            				<div class="form-group">
+                            					<label for="cc-exp" class="control-label mb-1">Mascota</label>
+                            					<input type="text" class="form-control cc-exp" th:field="*{nombreMascota}">
+                            					<span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                            				</div>
+                            			</div>
+                            			<div class="col-6">
+                            				<div class="form-group">
+                            					<label for="cc-exp" class="control-label mb-1">Due&#241;o</label>
+                            					<input type="text" class="form-control cc-exp" th:field="*{nombreDuenio}">
+                            					<span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                            				</div>
+                            			</div>
+                            		</div>
+                            		<div class="row text-center">
+                            			<div class="col-12 center-block">
+                            				<input type="submit" class="btn btn-secondary" th:value="${boton}"/>
+                            			</div>
+                            		</div>
+                            		<br>
+                            	</form>
                                 <table id="bootstrap-data-table" class="table table-striped table-bordered" style="font-size: 13px;">
                                     <thead class="thead-inverse">
                                         <tr style="text-align: center;">
@@ -35,7 +56,7 @@
                                             <th style="vertical-align: middle;">Edad</th>
                                             <th style="vertical-align: middle;">Color</th>
                                             <th style="vertical-align: middle;">Estado</th>
-                                            <th style="vertical-align: middle;">Acciones</th>
+                                            <th style="vertical-align: middle;">H.M.</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -48,22 +69,17 @@
 											<td th:text="${mascota.idMascota}"></td>
                                             <td th:text="${mascota.nombre}"></td>
                                             <td th:text="${mascota.duenio}"></td>
-                                            <td th:text="${mascota.etiquetaTipo}"></td>                                            
-                                            <td th:text="${mascota.raza}"></td>
-                                            <td th:text="${mascota.sexo}"></td>
-                                            <td th:text="${mascota.edad}"></td>
-                                            <td th:text="${mascota.color}"></td>
-                                            <td th:text="${mascota.etiquetaEstado}"></td>
-                                            <td>
+                                            <td style="text-align: center;" th:text="${mascota.etiquetaTipo}"></td>                                            
+                                            <td style="text-align: center;" th:text="${mascota.raza}"></td>
+                                            <td style="text-align: center;" th:text="${mascota.sexo}"></td>
+                                            <td style="text-align: center;" th:text="${mascota.edad}"></td>
+                                            <td style="text-align: center;" th:text="${mascota.color}"></td>
+                                            <td style="text-align: center;" th:text="${mascota.etiquetaEstado}"></td>
+                                            <td style="text-align: center;">
                                             	<div class="btn-group">
-                                            		<a class="btn btn-info" title="Editar"
-                                            			th:href="@{/registrarMascota/} + ${mascota.idMascota}">
-                                            			<i class="fa fa-pencil"></i>
-                                            		</a>                                          		
-                                            		<a class="btn btn-danger" href="#" title="Eliminar"
-                                            			th:href="@{/eliminarMascota/} + ${mascota.idMascota}"
-                                            			onclick="return confirm('Estas seguro que quieres eliminar?');">
-                                            			<i class="fa fa-times"></i>
+                                            		<a class="btn btn-info" title="Historial M&#233;dico"
+                                            			th:href="@{/historiaMedica/} + ${mascota.idMascota}">
+                                            			<i class="fa fa-h-square"></i>
                                             		</a>
                                             	</div>
                                             </td>

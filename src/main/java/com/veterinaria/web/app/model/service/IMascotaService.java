@@ -21,11 +21,17 @@ public interface IMascotaService {
 	public void delete(Long id);
 	
 	public List<Mascota> findByNombre(String term);
-	
+		
 	public Mascota findMascotaById(Long id);
 	
 	public void deleteMascota(Long id);
 	
 	public Persona fetchByIdWithPersona(Long id);
+	
+	public Persona selectPersonaDni(String id);
+	
+	public List<Mascota> selectPersonaNombre(String id);
+	
+	public List<Mascota> findByPersonaId(Long id);
 
 }
